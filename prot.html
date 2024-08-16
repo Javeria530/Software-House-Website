@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile - QuantumLeap Tech</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+</head>
+<body>
+    <section id="header">
+        <a href="home.html"><img src="images/lo.png" class="logo" style="width: 50px; height: auto;" alt="Logo"></a>
+        <div>
+            <ul id="navbar">
+                <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+                <li><a href="whyus.html"><i class="fas fa-info-circle" style="font-size:24px"></i></a></li>
+                <li><a href="services.html"><i class="fas fa-th-list"></i></a></li>
+                <li><a href="signup.html"><i class="fas fa-user-alt"></i></a></li>
+                <li><a href="contact.html"><i class="fa fa-phone"></i></a></li>
+                <li><a href="vaci.html"><i class="fas fa-user-plus"></i></a></li>
+                <li><a href="prot.html"><i class="fas fa-tachometer-alt"></i></a></li>
+                <li id="close"><i class="fas fa-times"></i></li>
+            </ul>
+        </div>
+        <div id="mobile">
+            <i id="bar" class="fas fa-outdent"></i>
+        </div>
+    </section>
+
+    <section id="profile">
+        <div class="profile-info">
+            <div class="profile-photo">
+                <img id="profile-photo" src="images/user.png" alt="Profile Photo">
+            </div>
+            <p><b>Name:</b> <span id="profile-name">Javeria Iqbal</span></p>
+            <p><b>Email:</b> <span id="profile-email">Nakhalsheikh4@gmail.com</span></p>
+            <p><b>Role:</b> <span id="profile-role">CEO</span></p>
+            <a href="edit.html" class="edit-profile-button">Edit Profile</a>
+        </div>
+    </section>
+
+    <section id="project-submission" class="section-p1">
+        <h3>Project Submission</h3>
+        <form id="project-form">
+            <label for="project-title">Project Title:</label>
+            <input type="text" id="project-title" name="project-title" required>
+            <label for="project-description">Project Description:</label>
+            <textarea id="project-description" name="project-description" required></textarea>
+            <label for="project-file">Upload Project File:</label>
+            <input type="file" id="project-file" name="project-file" required>
+            <button type="button" onclick="submitProject()">Submit Project</button>
+        </form>
+        <div id="submitted-projects">
+            <h3>Submitted Projects</h3>
+            <!-- List of submitted projects will be dynamically inserted here -->
+        </div>
+    </section>
+
+    <section id="notifications" class="section-p1">
+        <h3>Notifications</h3>
+        <div class="notification">
+            <p>New update available: Check out our latest features!</p>
+        </div>
+    </section>
+
+    <section id="support" class="section-p1">
+        <h3>Support</h3>
+        <p>If you need any help, please contact us:</p>
+        <a href="contact.html" class="button">Contact Support</a>
+    </section>
+
+    <script>
+        // Function to load profile data from localStorage
+        function loadProfile() {
+            const name = localStorage.getItem('profileName') || 'Not provided';
+            const email = localStorage.getItem('profileEmail') || 'Not provided';
+            const role = localStorage.getItem('profileRole') || 'Not provided';
+            const photo = localStorage.getItem('profilePhoto') || 'images/user.png'; // Default photo path
+
+            document.getElementById('profile-name').textContent = name;
+            document.getElementById('profile-email').textContent = email;
+            document.getElementById('profile-role').textContent = role;
+            document.getElementById('profile-photo').src = photo;
+        }
+
+        // Function to submit a project and add it to the list of submitted projects
+        function submitProject() {
+            const title = document.getElementById('project-title').value;
+            const description = document.getElementById('project-description').value;
+            const file = document.getElementById('project-file').files[0];
+
+            if (title && description && file) {
+                const projectList = document.getElementById('submitted-projects');
+                const projectDiv = document.createElement('div');
+                projectDiv.className = 'project';
+                projectDiv.innerHTML = `
+                        <h4>${title}</h4>
+                        <p>${description}</p>
+                        <p><b>File:</b> ${file.name}</p>
+                    `;
+                projectList.appendChild(projectDiv);
+
+                // Clear the form after submission
+                document.getElementById('project-form').reset();
+            } else {
+                alert('Please fill in all fields and select a file.');
+            }
+        }
+
+        // Load profile data and existing projects when the page loads
+        window.onload = loadProfile;
+    </script>
+</body>
+</html>
